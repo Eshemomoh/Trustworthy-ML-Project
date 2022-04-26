@@ -129,6 +129,7 @@ class GPLIME:
         # Build model using Tensorflow
         self.model = buildModel(weighted_data.shape[1])
         
+        
         # Call fit to train model and obtain weights
         Loss, coefs = self.fitmodel(weighted_data,weighted_labels,0.9,0.1,100)
         
@@ -173,8 +174,7 @@ class GPLIME:
 #     def train(self,data,labels,gamma,alpha):
         
 #         #GP Kernel K(x,x)
-#         D = tf.Variable(tf.ones([kernel.shape],dtype=tf.float64),trainable=True)
-#         kernel = tf.linalg.matmul(data,tf.linalg.matmul(D,data,transpose_a=True),transpose_a=True)
+#         kernel = tf.linalg.matmul(data,tf.linalg.matmul(self.D,data,transpose_a=True),transpose_a=True)
 #         with tf.GradientTape() as tape:
 #             prediction = self.model(data)
             
@@ -184,8 +184,8 @@ class GPLIME:
 #                 +0.5*(tf.linalg.matmul(tf.linalg.matmul(self.model.trainable_weights,\
 #                         tf.linalg.pinv(kernel),transpose_a=True),self.model.trainable_weights)))
                     
-#         gradients = tape.gradient(loss,self.model.trainable_variables)
-#         self.opt.apply_gradients(zip(gradients,self.model.trainable_variables))
+#         gradients = tape.gradient(loss,self.trainable_variables)
+#         self.opt.apply_gradients(zip(gradients,self.trainable_variables))
 #         return loss
     
 #     def fitmodel(self,data,labels,gamma,alpha,Epoch):
@@ -206,7 +206,7 @@ class GPLIME:
         
 #         # Build model using Tensorflow
 #         self.model = buildModel(train_data.shape[1])
-        
+#         self.D = tf.Variable(tf.ones([kernel.shape],dtype=tf.float64),trainable=True)
 #         # Call fit to train model and obtain weights
 #         Loss, coefs = self.fitmodel(train_data,train_labels,0.9,0.01,500)
         
